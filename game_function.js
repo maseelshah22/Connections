@@ -19,6 +19,7 @@ function setUpNewGame() {
 
 	if (localStorage.getItem("correctGuesses") != 4) {
 		localStorage.setItem("streak", 0);
+		localStorage.setItem("totGuesses", 0); //directions said to clear avg
 	}
 
 	document.getElementById("shuffle").disabled = false;
@@ -251,7 +252,7 @@ function submitHandler() {
 				"avg",
 				(
 					parseInt(localStorage.getItem("totGuesses")) /
-					localStorage.getItem("gPlayed")
+					(localStorage.getItem("gPlayed") + 1)
 				).toFixed(2)
 			);
 
@@ -262,6 +263,11 @@ function submitHandler() {
 			history.push("GAME OVER! You Won! Click New Game To Play Again!");
 			document.getElementById("shuffle").disabled = true;
 			stats();
+
+			var statsDiv = document.querySelector(".stats");
+
+			statsDiv.querySelector("#gamesPlayed").innerHTML =
+				+localStorage.getItem("gPlayed") +1;
 		}
 	} else {
 		let gCats = [];
@@ -333,18 +339,17 @@ function submitHandler() {
 		parseInt(localStorage.getItem("totGuesses")) + 1
 	);
 
-
 	clickedBoxes.forEach((box) => {
-        box.classList.remove("selected"); //no more select class
-    });
-	
+		box.classList.remove("selected"); //no more select class
+	});
+
 	clickedCount = 0;
 	showHistory();
 }
 
 function showHistory() {
 	const histElement = document.getElementById("guessHistory");
-	histElement.innerHTML = ""; 
+	histElement.innerHTML = "";
 
 	let history = JSON.parse(localStorage.getItem("history"));
 	history.forEach((guess) => {
