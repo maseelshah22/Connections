@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- 
+    Sources used:
+    https://www.w3schools.com/howto/howto_js_toggle_class.asp
+    https://www.freecodecamp.org/news/innerhtml-vs-innertext-vs-textcontent/
+    https://jsnoteclub.com/blog/how-to-call-javascript-functions-in-html-without-using-onclick/
+    https://www.geeksforgeeks.org/convert-a-string-to-an-integer-in-javascript/
+    https://sebhastian.com/shuffle-array-javascript/#:~:text=A%20JavaScript%20array%20elements%20can%20be%20shuffled%20by,%5B7%2C%208%2C%203%2C%201%2C%205%2C%204%2C%202%2C%206%5D
+    https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+    https://www.w3schools.com/js/js_maps.asp
+    https://bobbyhadz.com/blog/javascript-convert-array-of-objects-to-map
+ -->
+
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="author" content="Maseel Shah">
+    <meta name="description" content="This website will display display Maseel's HW6 Connections Game">
+    <meta name="keywords" content="Maseel, connections, hw6, uva, nyt, new york times, game, PL, cs">
+
+    <meta property="og:title" content="Homepage">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://cs4640.cs.virginia.edu/dda5us/hw6/">
+    <meta property="og:url" content="https://cs4640.cs.virginia.edu/dda5us/hw6/">
+    <meta property="og:description" content="This website will display display Maseel's HW6 Connections Game">
+    <meta property="og:site_name" content="Maseel's Connections JS HW6">
+
+    <title>Connections JS</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <header class="container">
+
+        <h1>Connections Game</h1>
+
+        <div class="game">
+            <div class="instructions">
+                <h2>Instructions</h2>
+                <p>Make 4 groups of 4, selecting words you believe are in the same category.
+                    <br>Select 4 words at a time from the table and click the "Submit" button to check your answers.
+                    <br>You can deselect your selections by clicking on them again.
+                    <br>Click the "Reset" button to clear your selections and start over.
+                </p>
+            </div>
+
+            <div class="stats">
+                <h2>Stats</h2>
+                <p>Games Played: <span id="gamesPlayed">0</span></p>
+                <p>Games Won: <span id="gamesWon">0</span></p>
+                <p>Win Streak: <span id="winStreak">0</span></p>
+                <p>Average Guesses Per Game: <span id="avgGuess">0</span></p>
+            </div>
+            <div class="playSection">
+                ----------------- <br>
+
+                <div id="gameboard">
+                    <script type="text/javascript">
+                        function init() {
+                            if (localStorage.getItem("board") == false || localStorage.getItem("board") == null){
+                                setUpNewGame();
+                                //console.log("Loaded from local storage");
+                            }
+                            else{
+                                let cat = JSON.parse(localStorage.getItem("json"));
+                               //console.log("cat",cat);
+                                createTable(cat);
+                                
+                            }
+                            
+                        }
+                        window.addEventListener("load", init);
+                    </script>
+                </div>
+                <br>
+                <div class="buttons">
+                    <button id="submit" class="btn btn-primary">Submit Guess</button>
+                    <button id="newgame" class="btn btn-danger">New Game</button>
+                    <button id="shuffle" class="btn btn-secondary">Shuffle Board</button>
+                    <button id="clearButton" class="btn btn-outline-danger">Clear History</button>
+                </div>
+
+                <div class="guessHistory">
+                    Guess History Will Go Here
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- <script type="text/javascript" src="connections.js"></script> -->
+        <!-- <script type="text/javascript">
+            // Ensure that connections.js has loaded and queryCategories() is accessible
+            document.addEventListener('DOMContentLoaded', (event) => {
+                let ans = queryCategories();
+                console.log(ans);
+            });
+        </script> -->
+    </header>
+
+    <script src="connections.js"></script>
+    <script src="game_function.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

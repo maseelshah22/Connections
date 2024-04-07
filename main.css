@@ -1,0 +1,21 @@
+.board{
+    width: 100%; /* Set the table width */
+    border-collapse: collapse; /* Collapse borders for a clean look */
+    table-layout: fixed; /* Use fixed layout for even column widths */
+}
+td{
+    background-color: lavenderblush;
+}
+.board td {
+    border: 1px solid #000; 
+    text-align: center; 
+    cursor: pointer; 
+    width: 25%; 
+    height: 50px; 
+    
+}
+
+.board td.selected {
+    background-color: lightgray; 
+}
+
