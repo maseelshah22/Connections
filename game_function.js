@@ -23,7 +23,6 @@ function setUpNewGame() {
 
 	document.getElementById("shuffle").disabled = false;
 
-
 	document.getElementById("guessHistory").innerHTML = " ";
 	localStorage.setItem("history", JSON.stringify([]));
 	localStorage.setItem("correctWords", JSON.stringify([]));
@@ -139,7 +138,7 @@ function createTable(categories) {
 }
 
 function clickCell(e) {
-	// Check if the clicked cell is already selected
+	//is cell selected?
 	if (e.target.classList.contains("selected")) {
 		e.target.classList.remove("selected");
 		clickedCount--;
@@ -191,9 +190,9 @@ function increaseGamesPlayed() {
 }
 
 function submitHandler() {
-	// Find all selected cells
+	//gets all selected boxes
 	let clickedBoxes = document.querySelectorAll(".selected");
-	let subWords = [];
+	let subWords = []; //submitted so
 
 	clickedBoxes.forEach((box) => {
 		subWords.push(box.innerHTML);
@@ -202,6 +201,8 @@ function submitHandler() {
 	//console.log(JSON.parse(localStorage.getItem("wordsToCat")));
 
 	let wtc = new Map(JSON.parse(localStorage.getItem("wordsToCat"))); //words to cat
+
+	let history = JSON.parse(localStorage.getItem("history"));
 
 	if (
 		wtc.get(subWords[0]) == wtc.get(subWords[1]) &&
@@ -223,9 +224,10 @@ function submitHandler() {
 		);
 		console.log("category: ", wtc.get(subWords[0]));
 
-		const hist = document.getElementById("guessHistory");
-		const histItem = document.createElement("li");
-		histItem.innerHTML =
+		//const hist = document.getElementById("guessHistory");
+		//const histItem = document.createElement("li");
+		//histItem.innerHTML =
+		let response =
 			"Correct Guess: " +
 			subWords[0] +
 			", " +
@@ -236,7 +238,8 @@ function submitHandler() {
 			subWords[3] +
 			" - Category: " +
 			wtc.get(subWords[0]);
-		hist.appendChild(histItem);
+		//hist.appendChild(histItem);
+		history.push(response);
 
 		if (parseInt(localStorage.getItem("correctGuesses")) == 4) {
 			localStorage.setItem("wins", parseInt(localStorage.getItem("wins")) + 1);
@@ -252,11 +255,12 @@ function submitHandler() {
 				).toFixed(2)
 			);
 
-			const hist = document.getElementById("guessHistory");
-			const histItem = document.createElement("li");
-			histItem.innerHTML = "GAME OVER! You Won! Click New Game To Play Again!";
-			hist.appendChild(histItem);
-
+			// const hist = document.getElementById("guessHistory");
+			// const histItem = document.createElement("li");
+			// histItem.innerHTML = "GAME OVER! You Won! Click New Game To Play Again!";
+			// hist.appendChild(histItem);
+			history.push("GAME OVER! You Won! Click New Game To Play Again!");
+			document.getElementById("shuffle").disabled = true;
 			stats();
 		}
 	} else {
@@ -288,11 +292,11 @@ function submitHandler() {
 
 		console.log(countMap);
 
-		const hist = document.getElementById("guessHistory");
-		const histItem = document.createElement("li");
+		// const hist = document.getElementById("guessHistory");
+		// const histItem = document.createElement("li");
 
 		if (maxSim < 2) {
-			histItem.innerHTML =
+			let response =
 				"Incorrect Guess: " +
 				subWords[0] +
 				", " +
@@ -301,10 +305,11 @@ function submitHandler() {
 				subWords[2] +
 				", " +
 				subWords[3];
-			hist.appendChild(histItem);
+			history.push(response);
+			//hist.appendChild(histItem);
 			//console.log("Incorrect!");
 		} else {
-			histItem.innerHTML =
+			let response =
 				"Incorrect Guess: " +
 				subWords[0] +
 				", " +
@@ -317,14 +322,36 @@ function submitHandler() {
 				maxSim +
 				" Words From The Same Category";
 
-			hist.appendChild(histItem);
+			history.push(response);
 		}
 	}
+
+	localStorage.setItem("history", JSON.stringify(history));
 
 	localStorage.setItem(
 		"totGuesses",
 		parseInt(localStorage.getItem("totGuesses")) + 1
 	);
+
+
+	clickedBoxes.forEach((box) => {
+        box.classList.remove("selected"); //no more select class
+    });
+	
+	clickedCount = 0;
+	showHistory();
+}
+
+function showHistory() {
+	const histElement = document.getElementById("guessHistory");
+	histElement.innerHTML = ""; 
+
+	let history = JSON.parse(localStorage.getItem("history"));
+	history.forEach((guess) => {
+		const histItem = document.createElement("li");
+		histItem.innerHTML = guess;
+		histElement.appendChild(histItem);
+	});
 }
 
 let newGameButton = document.getElementById("newgame");
