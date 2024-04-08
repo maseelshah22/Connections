@@ -65,22 +65,18 @@ function createTable(categories) {
 		let currCat = categories[i]["category"];
 		let tempWordGroup = [];
 
-		//const row = document.createElement("tr"); //
+		
 
 		for (let j = 0; j < 4; j++) {
-			//const cell_item = document.createElement("td"); //
-			//console.log(categories[i]);
+			
 			let word = categories[i].words[j];
 			tempWordGroup.push(word);
 			wordsToCat.set(word, currCat);
 
 			wordArr.push(word);
-			//cell_item.innerHTML = word; //gets the words in table //inner html or inner text??
-
-			//cell_item.addEventListener("click", clickCell);
-			//row.appendChild(cell_item);
+			
 		}
-		//table.appendChild(row);
+		
 		catToWords.set(currCat, tempWordGroup);
 	}
 
@@ -89,53 +85,40 @@ function createTable(categories) {
 		JSON.stringify(Array.from(wordsToCat.entries()))
 	);
 
-	//let numWords_left = 0;
 
-	// for (let i = 0; i < wordArr.length; i++) {
-	// 	if (!correctWords.includes(wordArr[i])) {
-	// 		numWords_left++;
-	// 	}
-	// }
-
-	//let rowNum = numWords_left / 4;
 	let correctWords = JSON.parse(localStorage.getItem("correctWords"));
 	let wordsLeft = wordArr.filter((word) => !correctWords.includes(word));
 	let rowNum = wordsLeft.length / 4;
 
-	//console.log("hi", wordsLeft);
 
 	wordsLeft = wordsLeft.sort(() => Math.random() - 0.5); //shuffles the words
 
 	for (let i = 0; i < rowNum; i++) {
 		const row = document.createElement("tr");
 		for (let j = 0; j < 4; j++) {
-			const cellIndex = i * 4 + j; //word index
-			if (cellIndex < wordsLeft.length) {
+			const loc = i * 4 + j; //word loc
+			if (loc < wordsLeft.length) {
 				const cell = document.createElement("td");
-				cell.innerHTML = wordsLeft[cellIndex];
+				cell.innerHTML = wordsLeft[loc];
 				cell.addEventListener("click", clickCell);
 				row.appendChild(cell); //adding wrd to row
 			} else {
 				break; //break cuz no more words to add
 			}
 		}
-		table.appendChild(row); // Add the completed row to the table
+		table.appendChild(row); //row is now in table
 	}
-
-	//console.log(numWords_left);
 
 	localStorage.setItem(
 		"catToWords",
 		JSON.stringify(Array.from(catToWords.entries()))
 	);
-	//console.log(localStorage.getItem("catToWords"));
-	// Clear previous table and add the new one to the game board
+	
 	const board = document.getElementById("gameboard");
 
 	board.innerHTML = " ";
 	board.appendChild(table);
 	localStorage.setItem("board", true);
-	//console.log(localStorage.getItem("board"));
 }
 
 function clickCell(e) {
@@ -148,11 +131,9 @@ function clickCell(e) {
 		if (clickedCount < 4) {
 			e.target.classList.add("selected");
 			clickedCount++;
-			// localStorage.setItem("gPlayed", 7);
-			//  stats();
 			document.getElementById("submit").disabled = true;
 		} else {
-			alert("Maximum of 4 cells can be selected at a time");
+			alert("Can only select 4 words at a time!");
 		}
 	}
 
@@ -193,17 +174,16 @@ function increaseGamesPlayed() {
 function submitHandler() {
 	//gets all selected boxes
 	let clickedBoxes = document.querySelectorAll(".selected");
-	let subWords = []; //submitted so
+	let subWords = []; //submitted words
 
 	clickedBoxes.forEach((box) => {
-		subWords.push(box.innerHTML);
+		subWords.push(box.innerHTML); //gets the submitted words int sub arr
 	});
 
-	//console.log(JSON.parse(localStorage.getItem("wordsToCat")));
 
 	let wtc = new Map(JSON.parse(localStorage.getItem("wordsToCat"))); //words to cat
 
-	let history = JSON.parse(localStorage.getItem("history"));
+	let history = JSON.parse(localStorage.getItem("history")); //history array
 
 	if (
 		wtc.get(subWords[0]) == wtc.get(subWords[1]) &&
@@ -225,9 +205,7 @@ function submitHandler() {
 		);
 		console.log("category: ", wtc.get(subWords[0]));
 
-		//const hist = document.getElementById("guessHistory");
-		//const histItem = document.createElement("li");
-		//histItem.innerHTML =
+	
 		let response =
 			"Correct Guess: " +
 			subWords[0] +
@@ -237,9 +215,9 @@ function submitHandler() {
 			subWords[2] +
 			", " +
 			subWords[3] +
-			" - Category: " +
+			" ~ Category: " +
 			wtc.get(subWords[0]);
-		//hist.appendChild(histItem);
+		
 		history.push(response);
 
 		if (parseInt(localStorage.getItem("correctGuesses")) == 4) {
@@ -256,10 +234,7 @@ function submitHandler() {
 				).toFixed(2)
 			);
 
-			// const hist = document.getElementById("guessHistory");
-			// const histItem = document.createElement("li");
-			// histItem.innerHTML = "GAME OVER! You Won! Click New Game To Play Again!";
-			// hist.appendChild(histItem);
+			
 			history.push("GAME OVER! You Won! Click New Game To Play Again!");
 			document.getElementById("shuffle").disabled = true;
 			stats();
@@ -270,7 +245,7 @@ function submitHandler() {
 				+localStorage.getItem("gPlayed") +1;
 		}
 	} else {
-		let gCats = [];
+		let gCats = []; //will hold the guessed CATEGORIES
 
 		for (let i = 0; i < 4; i++) {
 			gCats.push(wtc.get(subWords[i]));
@@ -278,7 +253,7 @@ function submitHandler() {
 
 		let countMap = new Map(); // Object to store counts
 
-		// Loop through the gCats array
+		
 		gCats.forEach((item) => {
 			if (countMap.has(item)) {
 				countMap.set(item, countMap.get(item) + 1);
@@ -290,6 +265,7 @@ function submitHandler() {
 		let countArr = [];
 		console.log(countMap);
 
+		//gets the most categories in common
 		for (let [key, value] of countMap) {
 			countArr.push(value);
 		}
@@ -297,9 +273,6 @@ function submitHandler() {
 		let maxSim = Math.max(...countArr);
 
 		console.log(countMap);
-
-		// const hist = document.getElementById("guessHistory");
-		// const histItem = document.createElement("li");
 
 		if (maxSim < 2) {
 			let response =
@@ -340,7 +313,7 @@ function submitHandler() {
 	);
 
 	clickedBoxes.forEach((box) => {
-		box.classList.remove("selected"); //no more select class
+		box.classList.remove("selected"); //no more select class, unselects for users
 	});
 
 	clickedCount = 0;
