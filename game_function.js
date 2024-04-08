@@ -324,7 +324,7 @@ function submitHandler() {
 				subWords[2] +
 				", " +
 				subWords[3] +
-				"<br> You Had " +
+				" <br> You Had " +
 				maxSim +
 				" Words From The Same Category";
 
@@ -353,7 +353,7 @@ function showHistory() {
 
 	let history = JSON.parse(localStorage.getItem("history"));
 	history.forEach((guess) => {
-		const histItem = document.createElement("li");
+		const histItem = document.createElement("p");
 		histItem.innerHTML = guess;
 		histElement.appendChild(histItem);
 	});

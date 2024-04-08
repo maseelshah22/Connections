@@ -50,11 +50,13 @@
                 <p>Make 4 groups of 4, selecting words you believe are in the same category.
                     <br>Select 4 words at a time from the table and click the "Submit" button to check your answers.
                     <br>You can deselect your selections by clicking on them again.
-                    <br>Click the "Reset" button to clear your selections and start over.
+                    <br>Click the "Clear History" button to erase your stats and play a new game.
+                    <br> Click the "New Game" button to start a new game.
                 </p>
             </div>
 
             <div class="stats">
+                
                 <h2>Stats</h2>
                 <p>Games Played: <span id="gamesPlayed">0</span></p>
                 <p>Games Won: <span id="gamesWon">0</span></p>
@@ -62,24 +64,24 @@
                 <p>Average Guesses Per Game: <span id="avgGuess">0</span></p>
             </div>
             <div class="playSection">
-                ----------------- <br>
+                <br>
 
                 <div id="gameboard">
                     <script type="text/javascript">
                         function init() {
-                            if (localStorage.getItem("board") == false || localStorage.getItem("board") == null){
+                            if (localStorage.getItem("board") == false || localStorage.getItem("board") == null) {
                                 setUpNewGame();
                                 //console.log("Loaded from local storage");
                             }
-                            else{
+                            else {
                                 let cat = JSON.parse(localStorage.getItem("json"));
-                               //console.log("cat",cat);
+                                //console.log("cat",cat);
                                 createTable(cat);
                                 stats();
                                 showHistory();
-                                
+
                             }
-                            
+
                         }
                         window.addEventListener("load", init);
                     </script>
@@ -91,9 +93,12 @@
                     <button id="shuffle" class="btn btn-secondary">Shuffle Board</button>
                     <button id="clearButton" class="btn btn-outline-danger">Clear History</button>
                 </div>
+                <div class="guessHeader">
+                    <br>
+                    <h2>Guess History</h2>
+                    <div id="guessHistory">
 
-                <div id="guessHistory">
-                    Guess History Will Go Here
+                    </div>
                 </div>
             </div>
 

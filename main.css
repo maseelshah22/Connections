@@ -1,21 +1,70 @@
-.board{
-    width: 100%; /* Set the table width */
-    border-collapse: collapse; /* Collapse borders for a clean look */
-    table-layout: fixed; /* Use fixed layout for even column widths */
-}
-td{
-    background-color: lavenderblush;
-}
-.board td {
-    border: 1px solid #000; 
-    text-align: center; 
-    cursor: pointer; 
-    width: 25%; 
-    height: 50px; 
+* {
+	text-align: center;
+	justify-content: center;
+    font-family: monospace;
+
     
 }
 
-.board td.selected {
-    background-color: lightgray; 
+p{
+    font-size: 1rem;
 }
 
+h1{
+    padding-top: 2rem;
+    color: black;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 5rem;
+    font-style: italic;
+    text-decoration: underline;
+    
+
+}
+h2{
+    padding-top: 2rem;
+    text-decoration: underline;
+}
+html, body {
+    min-height: 100%;
+    margin: 0;
+    background-color: rgb(221, 212, 237) !important;
+  }
+
+  
+#guessHistory {
+    
+	color: rgb(50, 103, 211);
+    font-size: 1.4rem;
+}
+
+.board {
+	width: 100%; 
+	
+	table-layout: fixed; /* Use fixed layout for even column widths */
+}
+td {
+	background-color: lavenderblush;
+    color: black;
+    font-family:  monospace;
+    font-weight: bold;
+}
+.board td {
+	border: 1.5px solid #000;
+	text-align: center;
+	cursor: pointer;
+	width: 25%;
+	height: 50px;
+    color:rgb(94, 160, 160);
+    /* color: rgb(50, 103, 211); */
+    font-size: 1.2rem;
+}
+
+.board td.selected {
+	background-color: lightgray;
+}
+
+.stats{
+    color: rgb(227, 62, 36);
+    font-size: 1.2rem;
+}
