@@ -1,6 +1,6 @@
 # Connections 🟨 🟩 🟦 🟪
 
-## Author ✍️
+## Developer ✍️
 Maseel Shah
 
 ## About 👾🧩📱
