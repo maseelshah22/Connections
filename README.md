@@ -17,4 +17,4 @@ Maseel Shah
 
 
 
-<div align=center><img  width="600" alt="Screenshot 2024-05-08 at 11 09 27 PM" src="https://github.com/maseelshah22/Connections/assets/98069253/fe8a1064-7e9b-430b-80ad-f203b4c178b6"></div>
+<div align=center><img  width="500" alt="Screenshot 2024-05-08 at 11 09 27 PM" src="https://github.com/maseelshah22/Connections/assets/98069253/fe8a1064-7e9b-430b-80ad-f203b4c178b6"></div>
